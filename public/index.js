@@ -191,16 +191,16 @@ function price() {
 	{
 		for (var j = 0; j < cars.length; j++)
 		{
-			if (cars.vehicule == rentals.carId)
+			if (cars[j].id == rentals[i].carId)
 			{
 				//Exercice 1 et 2
 				var temps = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);
 
-				if (temps == 1 || temps == 0) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*cars[j].pricePerDay; }
-				if (temps > 1 && temps < 5) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*(cars[j].pricePerDay*0.9); }
-				else if (temps > 4 && temps < 11) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*(cars[j].pricePerDay*0.7); }
+				if (temps == 0) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*cars[j].pricePerDay; }
+				if (temps > 0 && temps < 5) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*(cars[j].pricePerDay*0.9); }
+				else if (temps > 4 && temps < 10) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*(cars[j].pricePerDay*0.7); }
 				else if (temps > 10) { rentals[i].price = rentals[i].distance*cars[j].pricePerKm + (temps + 1)*(cars[j].pricePerDay*0.5); }
-
+				
 				//Exercice 3
 				var com = rentals[i].price*0.3;
 				rentals[i].commission.insurance = com*0.5;
@@ -209,7 +209,7 @@ function price() {
 				//Exercice 4
 				var deduc = 0;
 				if (rentals[i].deductibleReduction == true) { deduc = (temps + 1) * 4; }
-				rentals[i].commission.drivy = com - (com*0.5 - 1) + deduc;
+				rentals[i].commission.drivy = com - rentals[i].commission.insurance - rentals[i].commission.assistance + deduc;
 				rentals[i].price = rentals[i].price + deduc;
 			}
 		}
